@@ -1,0 +1,19 @@
+{
+  "name": "shakespokemon-api",
+  "version": "1.0.0",
+  "description": "Shakespearean pokemon database ",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "shakesperean",
+    "pokemon",
+    "translator"
+  ],
+  "author": "Emanuele Menon <emnlmn@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^3.9.6"
+  }
+}
