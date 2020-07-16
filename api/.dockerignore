@@ -1,0 +1,8 @@
+/node_modules
+/.eslintrc.json
+/.prettierrc
+/jest.config.js
+docker-compose*
+/Makefile
+/README.md
+/coverage
