@@ -1,0 +1,40 @@
+{
+    "env": {
+        "browser": false,
+        "es6": true,
+        "node": true,
+        "jest": true
+    },
+    "extends": [
+        "airbnb-typescript/base",
+        "plugin:prettier/recommended",
+        "prettier/@typescript-eslint"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module",
+        "project": "./tsconfig.json"
+    },
+    "plugins": [
+        "@typescript-eslint",
+        "prettier"
+    ],
+    "rules": {
+        "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+        "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+        "indent": "off",
+        "no-unused-vars": "off",
+        "max-len" : ["error", { "code": 120 }],
+        "prettier/prettier": "error"
+    },
+    "settings": {
+        "import/resolver": {
+            "typescript": {}
+        }
+    }
+}

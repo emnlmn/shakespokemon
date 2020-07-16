@@ -4,10 +4,10 @@ Feature: given a Pokemon name, returns its shakespearean description
 
   Scenario: retrieve shakespearean description for an existing pokemon
     Given this Pokemon
-      | name      | description                             | shakespearean description                  |
-      | charizard | A pokemon that can fly and throw flames | A pokemon yond can fly and throweth flames |
-      | blastoise | A big tortoise that sprinkle water      | A big tortoise yond sprinkle water         |
+      | name                      | charizard                                  |
+      | description               | A pokemon that can fly and throw flames    |
+      | shakespearean description | A pokemon yond can fly and throweth flames |
     When client request the description for the Pokemon "charizard"
     Then it should receive
-      | name      | description                                                  |
-      | charizard | the description "A pokemon yond can fly and throweth flames" |
+      | name      | description                                |
+      | charizard | A pokemon yond can fly and throweth flames |
