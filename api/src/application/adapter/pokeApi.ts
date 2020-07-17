@@ -4,6 +4,7 @@ import * as E from 'fp-ts/lib/Either';
 import * as t from 'io-ts';
 import { flow, pipe } from 'fp-ts/lib/function';
 import { PokemonName } from '../../domain/pokemon/valueObject/PokemonName';
+import { makeNonEmptyPokemonDescription } from '../../domain/pokemon/valueObject/PokemonDescription';
 
 const cache = new Map();
 
@@ -41,17 +42,11 @@ const pokeApi = got.extend({
         return next(options);
       }
 
-      // Magic begins
       return (async () => {
         try {
           return await next(options);
         } catch (error) {
-          const { response } = error;
-
-          if (response && response.body) {
-            error.name = 'PokeApiError';
-            error.message = `${response.body.message} (${response.statusCode} status code)`;
-          }
+          error.name = `[PokeApi] ${error.name}`;
 
           throw error;
         }
@@ -73,14 +68,15 @@ const getPokemonSpecies = (pokemonName: PokemonName) =>
     (reason) => new Error(String(reason)),
   );
 
-const fetchPokemonDescription = (pokemonName: PokemonName): TE.TaskEither<Error, string> => {
+const fetchPokemonDescription = (pokemonName: PokemonName) => {
   return pipe(
     getPokemonSpecies(pokemonName),
-    TE.map((x) => x.body),
+    TE.map((response) => response.body),
     TE.chain(decodeWith(pokemonFlavorTextEntries)),
     TE.map((decodedBody) => decodedBody.flavor_text_entries),
     TE.map((entries) => (entries.length ? entries.filter((entry) => entry.language.name === 'en').pop() : '')),
     TE.map((description) => (description ? description.flavor_text : '')),
+    TE.map(makeNonEmptyPokemonDescription),
   );
 };
 
