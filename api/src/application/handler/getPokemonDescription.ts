@@ -1,4 +1,4 @@
-import { Next, Request, Response } from 'restify';
+import { Request, Response } from 'restify';
 import { pipe } from 'fp-ts/lib/pipeable';
 import * as O from 'fp-ts/lib/Option';
 import * as TE from 'fp-ts/lib/TaskEither';
@@ -8,9 +8,8 @@ import { RetrieveShakespeareanPokemon } from '../../domain/pokemon/useCase/Retri
 const getPokemonDescription = (retrieveShakespeareanPokemon: RetrieveShakespeareanPokemon) => async (
   req: Request,
   res: Response,
-  next: Next,
 ) => {
-  const task = pipe(
+  return pipe(
     makeNonEmptyPokemonName(req.params.name),
     O.fold(
       () => res.send(400, 'Invalid Pokemon name'),
@@ -20,13 +19,7 @@ const getPokemonDescription = (retrieveShakespeareanPokemon: RetrieveShakespeare
       (e) => res.send(400, e),
       (shakespeareanPokemon) => res.send(shakespeareanPokemon),
     ),
-  );
-
-  try {
-    await task();
-  } catch (e) {
-    next(e);
-  }
+  )();
 };
 
 export default getPokemonDescription;

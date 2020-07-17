@@ -4,13 +4,18 @@ import { pipe } from 'fp-ts/lib/pipeable';
 import { PokemonRepository } from '../../domain/pokemon/repository/PokemonRepository';
 import { makeNonEmptyPokemonDescription } from '../../domain/pokemon/valueObject/PokemonDescription';
 import { makePokemon } from '../../domain/pokemon/entity/Pokemon';
+import { fetchPokemonDescription } from '../adapter/pokeApi';
 
 const remotePokemonRepository: PokemonRepository = (name) => {
   return pipe(
-    makeNonEmptyPokemonDescription('lore ipsum'),
-    O.fold(
-      () => TE.left({ error: `Pokemon with name ${name} not found.` }),
-      (description) => TE.right(makePokemon(name, description)),
+    fetchPokemonDescription(name),
+    TE.map(makeNonEmptyPokemonDescription),
+    TE.fold(
+      (error) => TE.left({ error: error.message }),
+      O.fold(
+        () => TE.left({ error: 'Pokemon not found' }),
+        (description) => TE.right(makePokemon(name, description)),
+      ),
     ),
   );
 };

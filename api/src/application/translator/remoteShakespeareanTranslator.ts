@@ -7,7 +7,7 @@ import { makeNonEmptyShakespeareanDescription } from '../../domain/pokemon/value
 
 const remoteShakespeareanTranslator: ShakespeareanTranslator = (pokemon) => {
   return pipe(
-    makeNonEmptyShakespeareanDescription('So cool '),
+    makeNonEmptyShakespeareanDescription(pokemon.description),
     O.fold(
       () => TE.left({ error: 'Could not retrieve shakespearean Pokemon description' }),
       (description) => TE.right(makeShakespeareanPokemon(pokemon.name, description)),
