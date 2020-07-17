@@ -6,12 +6,12 @@
   "scripts": {
     "build": "rimraf ./dist && tsc",
     "dev": "ts-node-dev --respawn --inspect=0.0.0.0 -- ./src/app.ts",
+    "start": "ts-node src/app.ts",
     "lint": "eslint ./src ./features --ext .ts",
     "lint:fix": "eslint ./src ./features --ext .ts --fix",
     "test:unit": "jest",
-    "test:features": "cucumber-js --require-module ts-node/register --require 'features/step_definitions/**/*.ts'",
     "test:coverage": "jest unit --coverage",
-    "start": "node src/app.js"
+    "test:behaviours": "cucumber-js --require-module ts-node/register --require 'features/step_definitions/**/*.ts'"
   },
   "keywords": [
     "shakesperean",
@@ -26,6 +26,7 @@
     "@types/got": "^9.6.11",
     "@types/jest": "^26.0.4",
     "@types/restify": "^8.4.2",
+    "@types/restify-errors": "^4.3.3",
     "@typescript-eslint/eslint-plugin": "^3.6.1",
     "@typescript-eslint/parser": "^3.6.1",
     "assert": "^2.0.0",
@@ -41,12 +42,15 @@
     "jest": "^26.1.0",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
+    "ts-jest": "^26.1.3",
     "ts-node": "^8.10.2",
     "ts-node-dev": "^1.0.0-pre.51",
     "typescript": "^3.9.6"
   },
   "dependencies": {
     "got": "^11.5.0",
-    "restify": "^8.5.1"
+    "restify": "^8.5.1",
+    "restify-clients": "^3.0.0",
+    "restify-errors": "^8.0.2"
   }
 }

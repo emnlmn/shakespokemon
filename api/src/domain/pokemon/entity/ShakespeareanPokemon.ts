@@ -1,7 +1,12 @@
 import { PokemonName } from '../valueObject/PokemonName';
 import { ShakespeareanDescription } from '../valueObject/ShakespeareanDescription';
 
-export type ShakespeareanPokemon = {
+export interface ShakespeareanPokemon {
   readonly name: PokemonName;
   readonly description: ShakespeareanDescription;
-};
+}
+
+export const makeShakespeareanPokemon = (
+  name: PokemonName,
+  description: ShakespeareanDescription,
+): ShakespeareanPokemon => ({ name, description });

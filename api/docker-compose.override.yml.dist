@@ -1,9 +1,9 @@
 version: "3.7"
 
 volumes:
-  nfsmount:
+  app:
     driver: local
     driver_opts:
       type: nfs
       o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3,rsize=32768,wsize=32768
-      device: ":/path/to/project"
+      device: ${PWD}

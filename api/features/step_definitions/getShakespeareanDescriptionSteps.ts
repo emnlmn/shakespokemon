@@ -1,28 +1,34 @@
 import { Server } from 'restify';
-import { AfterAll, Before, BeforeAll, Given, TableDefinition, Then, When } from 'cucumber';
+import { AfterAll, BeforeAll, Given, TableDefinition, Then, When } from 'cucumber';
 import got, { Response } from 'got';
-import pokemonNameFactory from '../../src/domain/pokemon/factory/pokemonNameFactory';
-import pokemonDescriptionFactory from '../../src/domain/pokemon/factory/pokemonDescriptionFactory';
+import * as TE from 'fp-ts/lib/TaskEither';
 import bootstrap from '../../src/application/bootstrap';
 import { PokemonRepository } from '../../src/domain/pokemon/repository/PokemonRepository';
-import { Pokemon } from '../../src/domain/pokemon/model/Pokemon';
+import { Pokemon } from '../../src/domain/pokemon/entity/Pokemon';
 import { ShakespeareanTranslator } from '../../src/domain/pokemon/pokemonTranslator/ShakespeareanTranslator';
+import { PokemonName } from '../../src/domain/pokemon/valueObject/PokemonName';
+import { ShakespeareanPokemon } from '../../src/domain/pokemon/entity/ShakespeareanPokemon';
+import { AppConfig } from '../../src/application/config/configFactory';
+import { ShakespeareanDescription } from '../../src/domain/pokemon/valueObject/ShakespeareanDescription';
 
 const assert = require('assert');
 
-let pokemon: Pokemon;
-let response: Response<string>;
-let applicationServer: Server;
-const repositoryMock: PokemonRepository = (_) => pokemon;
-const translatorMock: ShakespeareanTranslator = (_) => pokemon;
+const testConfig: AppConfig = {
+  environment: 'development',
+  server: {
+    port: 8082,
+  },
+};
 
-Before(() => {
-  pokemon = ({} as any) as Pokemon;
-  response = ({} as any) as Response<string>;
-});
+let shakespeareanPokemon: ShakespeareanPokemon;
+let lastResponse: Response<string>;
+let applicationServer: Server;
+
+const repositoryMock: PokemonRepository = (_) => TE.right({} as Pokemon);
+const translatorMock: ShakespeareanTranslator = (_) => TE.right(shakespeareanPokemon);
 
 BeforeAll(() => {
-  applicationServer = bootstrap(repositoryMock, translatorMock);
+  applicationServer = bootstrap(repositoryMock, translatorMock, testConfig);
 });
 
 AfterAll(() => {
@@ -32,21 +38,20 @@ AfterAll(() => {
 Given('this Pokemon', (dataTable: TableDefinition) => {
   const fixture = dataTable.rowsHash();
 
-  pokemon = {
-    name: pokemonNameFactory(fixture.name),
-    description: pokemonDescriptionFactory(fixture['shakespearean description']),
+  shakespeareanPokemon = {
+    name: fixture.name as PokemonName,
+    description: fixture['shakespearean description'] as ShakespeareanDescription,
   };
 });
 
 When('client request the description for the Pokemon {string}', async (name: string) => {
-  response = await got.get(`http://localhost:8080/pokemon/${name}`);
+  lastResponse = await got(`http://localhost:${testConfig.server.port}/pokemon/${name}`);
 });
 
 Then('it should receive', (dataTable: TableDefinition) => {
-  assert.strictEqual(response.statusCode, 200);
+  assert.strictEqual(lastResponse.statusCode, 200);
 
   const expectedData = dataTable.hashes().pop();
-  const responseData = JSON.parse(response.body);
-
+  const responseData = JSON.parse(lastResponse.body);
   assert.deepStrictEqual(expectedData, responseData);
 });

@@ -6,10 +6,12 @@ help:
 	@echo "  ${boldunderline}Backend Commands${normal}"
 	@echo ""
 	@echo "      ${bold}shell${normal}				Get an interactive shell (inside the container)"
+	@echo "      ${bold}build${normal}				Build the latest release image"
 	@echo "      ${bold}cs-check${normal}				Check code style with eslint"
 	@echo "      ${bold}cs-fix${normal}				Fix code style with eslint"
-	@echo "      ${bold}test${normal}				Fix code style with eslint"
-	@echo "      ${bold}build${normal}				Build the latest release image"
+	@echo "      ${bold}test-unit${normal}				Runs the unit test suite"
+	@echo "      ${bold}test-coverage${normal}			Runs the test suite and show the total coverage"
+	@echo "      ${bold}test-behaviours${normal}			Runs the behavioural test suite"
 	@echo ""
 
 setup: start
@@ -30,8 +32,14 @@ cs-check: start
 cs-fix: start
 	@docker-compose exec shakespokemon sh -c "npm run lint:fix"
 
-test: start
-	@docker-compose exec shakespokemon sh -c "npm test:functional"
+test-unit: start
+	@docker-compose exec shakespokemon sh -c "npm run test:unit"
+
+test-coverage: start
+	@docker-compose exec shakespokemon sh -c "npm run test:coverage"
+
+test-behaviours:
+	npm run test:behaviours
 
 build:
 	docker build .
