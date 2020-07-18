@@ -3,7 +3,7 @@ import { pipe } from 'fp-ts/lib/pipeable';
 import * as O from 'fp-ts/lib/Option';
 import * as TE from 'fp-ts/lib/TaskEither';
 import { makeNonEmptyPokemonName } from '../../domain/pokemon/valueObject/PokemonName';
-import { RetrieveShakespeareanPokemon } from '../../domain/pokemon/useCase/RetrieveShakespeareanPokemon';
+import { RetrieveShakespeareanPokemon } from '../../domain/pokemon/useCase/retrieveShakespeareanPokemon';
 
 const getPokemonDescription = (retrieveShakespeareanPokemon: RetrieveShakespeareanPokemon) => async (
   req: Request,

@@ -10,7 +10,7 @@
     "lint": "eslint ./src ./features --ext .ts",
     "lint:fix": "eslint ./src ./features --ext .ts --fix",
     "test:unit": "jest",
-    "test:coverage": "jest unit --coverage",
+    "test:coverage": "jest --coverage",
     "test:behaviours": "cucumber-js --require-module ts-node/register --require 'features/step_definitions/**/*.ts'"
   },
   "keywords": [
@@ -25,7 +25,7 @@
     "@types/axios": "^0.14.0",
     "@types/cucumber": "^6.0.1",
     "@types/got": "^9.6.11",
-    "@types/jest": "^26.0.4",
+    "@types/jest": "^26.0.5",
     "@types/restify": "^8.4.2",
     "@types/restify-errors": "^4.3.3",
     "@typescript-eslint/eslint-plugin": "^3.6.1",

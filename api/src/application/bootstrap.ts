@@ -1,7 +1,7 @@
 import * as restify from 'restify';
 import { Server } from 'restify';
 import getPokemonDescription from './handler/getPokemonDescription';
-import { retrieveShakespeareanPokemon } from '../domain/pokemon/useCase/RetrieveShakespeareanPokemon';
+import { retrieveShakespeareanPokemon } from '../domain/pokemon/useCase/retrieveShakespeareanPokemon';
 import { PokemonRepository } from '../domain/pokemon/repository/PokemonRepository';
 import { ShakespeareanTranslator } from '../domain/pokemon/pokemonTranslator/ShakespeareanTranslator';
 import { AppConfig } from './config/configFactory';

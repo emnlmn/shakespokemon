@@ -1,6 +1,8 @@
 /node_modules
 /.eslintrc.json
 /.prettierrc
+/tests
+/features
 /jest.config.js
 docker-compose*
 /Makefile

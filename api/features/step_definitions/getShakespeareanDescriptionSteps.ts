@@ -14,7 +14,6 @@ import { ShakespeareanDescription } from '../../src/domain/pokemon/valueObject/S
 const assert = require('assert');
 
 const testConfig: AppConfig = {
-  environment: 'development',
   server: {
     port: 8082,
   },
