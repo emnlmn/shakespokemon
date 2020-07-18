@@ -6,7 +6,7 @@ import { flow, pipe } from 'fp-ts/lib/function';
 import { PokemonName } from '../../domain/pokemon/valueObject/PokemonName';
 import { makeNonEmptyPokemonDescription } from '../../domain/pokemon/valueObject/PokemonDescription';
 
-const cache = new Map();
+const inMemoryCache = new Map();
 
 const baseUrl = 'https://pokeapi.co/api/v2/pokemon-species/';
 
@@ -26,15 +26,13 @@ const pokemonFlavorTextEntries = t.type({
   ),
 });
 
-type PokemonDescriptions = t.TypeOf<typeof pokemonFlavorTextEntries>;
-
 const pokeApi = got.extend({
   prefixUrl: baseUrl,
   headers: {
     accept: 'application/json',
     'user-agent': 'shakespokemon',
   },
-  cache,
+  cache: inMemoryCache,
   responseType: 'json',
   handlers: [
     (options, next) => {

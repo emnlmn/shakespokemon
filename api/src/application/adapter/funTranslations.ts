@@ -6,7 +6,7 @@ import { flow, pipe } from 'fp-ts/lib/function';
 import { PokemonDescription } from '../../domain/pokemon/valueObject/PokemonDescription';
 import { makeNonEmptyShakespeareanDescription } from '../../domain/pokemon/valueObject/ShakespeareanDescription';
 
-const cache = new Map();
+const inMemoryCache = new Map();
 
 const baseUrl = 'https://api.funtranslations.com/translate/';
 
@@ -21,21 +21,13 @@ const translationResponse = t.type({
   }),
 });
 
-type translationResponse = t.TypeOf<typeof translationResponse>;
-
-const getRateLimit = (headers: []) => ({
-  limit: parseInt(headers['x-ratelimit-limit'], 10),
-  remaining: parseInt(headers['x-ratelimit-remaining'], 10),
-  reset: new Date(parseInt(headers['x-ratelimit-reset'], 10) * 1000),
-});
-
 export const funTranslationsApi = got.extend({
   prefixUrl: baseUrl,
   headers: {
     accept: 'application/json',
     'user-agent': 'shakespokemon',
   },
-  cache,
+  cache: inMemoryCache,
   responseType: 'json',
   handlers: [
     (options, next) => {
@@ -65,7 +57,7 @@ const decodeWith = <A>(decoder: t.Decoder<unknown, A>) =>
 
 const fetchTranslatedDescription = (pokemonDescription: PokemonDescription) => {
   return TE.tryCatch<Error, Response>(
-    () => funTranslationsApi('shakespeare.json', { searchParams: { text: pokemonDescription } }),
+    () => funTranslationsApi.post('shakespeare', { json: { text: pokemonDescription } }),
     (reason) => new Error(String(reason)),
   );
 };
