@@ -1,6 +1,6 @@
 import * as restify from 'restify';
 import { Server } from 'restify';
-import getPokemonDescription from './handler/getPokemonDescription';
+import getPokemonHandler from './handler/getPokemon';
 import { retrieveShakespeareanPokemon } from '../domain/pokemon/useCase/retrieveShakespeareanPokemon';
 import { PokemonRepository } from '../domain/pokemon/repository/PokemonRepository';
 import { ShakespeareanTranslator } from '../domain/pokemon/pokemonTranslator/ShakespeareanTranslator';
@@ -14,7 +14,7 @@ const bootstrap = (
   config: AppConfig,
 ): Server => {
   const getPokemonDescriptionHandler = catchError(
-    getPokemonDescription(retrieveShakespeareanPokemon(pokemonRepository, shakespeareanTranslator)),
+    getPokemonHandler(retrieveShakespeareanPokemon(pokemonRepository, shakespeareanTranslator)),
   );
 
   const server = restify.createServer();

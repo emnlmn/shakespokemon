@@ -1,0 +1,28 @@
+.favoriteContainer {
+  box-shadow: 0px 3px 5px #e5e5e5 inset;
+  margin: 50px 0;
+}
+
+.favoriteContainer h3 {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.favoriteList {
+  display: flex;
+  margin: 0;
+  flex-direction: row;
+  justify-content: start;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.favoriteList h3 {
+  text-align: center;
+}
+
+.favoriteList .pokemonCard {
+  max-width: 380px;
+  margin: 20px 10px;
+}

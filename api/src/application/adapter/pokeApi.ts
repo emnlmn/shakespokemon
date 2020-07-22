@@ -72,6 +72,7 @@ const fetchPokemonSpecies = (pokemonName: PokemonName) =>
 
 const fetchPokemonDescription = (pokemonName: PokemonName) => {
   return pipe(
+
     fetchPokemonSpecies(pokemonName),
     TE.map((response) => response.body),
     TE.chain(decodeWith(pokemonFlavorTextEntries)),

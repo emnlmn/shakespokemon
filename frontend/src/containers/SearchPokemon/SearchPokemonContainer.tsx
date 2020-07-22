@@ -3,6 +3,7 @@ import SearchForm from '../../components/Search/SearchForm';
 import PokemonResult from '../../components/Search/PokemonResult';
 import pokemonSearch from '../../store/reducers/pokemonSearch';
 import { Pokemon, searchPokemon } from '../../store/actions/searchPokemon';
+import './SearchPokemonContainer.css';
 
 type Props = {
   addPokemonToFavorite: (pokemon: Pokemon) => void
@@ -13,23 +14,21 @@ const SearchPokemonContainer = (props: Props) => {
   const [searchTerm, updateSearchTerm] = useState('');
   const [{pokemon, isLoading, error}, dispatch] = useReducer(pokemonSearch, {isLoading: false});
 
-  const loadingMessage = isLoading ? <p>Searching for Pokemon {searchTerm}</p> : null;
-  const errorMessage = error ? <p>Error while searching: {error}</p> : null;
+  const loadingMessage = isLoading ? <div>Searching for Pokemon {searchTerm}</div> : null;
+  const errorMessage = error ? <div className={'errorAlert'}><span>Error while searching: {error}</span></div> : null;
   const pokemonResultComponent = pokemon
     ? <PokemonResult pokemon={pokemon} addToFavorite={() => {addPokemonToFavorite(pokemon)}}/>
     : null;
 
   return (
-    <React.Fragment>
-      <h1>ShakesPokemon</h1>
+    <div className={'searchPokemonContainer'}>
       <SearchForm searchTerm={searchTerm} updateSearchTerm={updateSearchTerm} onSubmit={() => {
         searchPokemon(searchTerm)(dispatch)
-
       }}/>
       {loadingMessage}
       {errorMessage}
       {pokemonResultComponent}
-    </React.Fragment>
+    </div>
   );
 };
 

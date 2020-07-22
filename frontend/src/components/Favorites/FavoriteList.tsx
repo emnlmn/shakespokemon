@@ -4,6 +4,7 @@ import pokemonSearch from '../../store/reducers/pokemonSearch';
 import favoritePokemons from '../../store/reducers/favorites';
 import FavoriteItem from './FavoriteItem';
 import { Pokemon } from '../../store/actions/searchPokemon';
+import './FavoriteList.css';
 
 type Props = {
   favoritePokemons: Pokemon[],
@@ -18,12 +19,12 @@ const favoriteList = (props: Props) => {
   );
 
   return (
-    <React.Fragment>
+    <div className={'favoriteContainer'}>
       <h3>Your favorite Pokemons</h3>
-      <ul>
+      <ul className={'favoriteList'}>
         {favoritePokemonList}
       </ul>
-    </React.Fragment>
+    </div>
   );
 };
 

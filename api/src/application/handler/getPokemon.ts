@@ -5,10 +5,11 @@ import * as TE from 'fp-ts/lib/TaskEither';
 import { makeNonEmptyPokemonName } from '../../domain/pokemon/valueObject/PokemonName';
 import { RetrieveShakespeareanPokemon } from '../../domain/pokemon/useCase/retrieveShakespeareanPokemon';
 
-const getPokemonDescription = (retrieveShakespeareanPokemon: RetrieveShakespeareanPokemon) => async (
+const getPokemon = (retrieveShakespeareanPokemon: RetrieveShakespeareanPokemon) => async (
   req: Request,
   res: Response,
 ) => {
+  // return res.send({name: Math.random().toString(36).substring(7), description: Math.random().toString(10).substring(Math.random())});
   return pipe(
     makeNonEmptyPokemonName(req.params.name || ''),
     O.fold(
@@ -22,4 +23,4 @@ const getPokemonDescription = (retrieveShakespeareanPokemon: RetrieveShakespeare
   )();
 };
 
-export default getPokemonDescription;
+export default getPokemon;

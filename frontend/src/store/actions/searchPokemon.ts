@@ -38,7 +38,7 @@ export const searchPokemon = (name: string) => {
         dispatch(setPokemon(response.data));
       } )
       .catch( error => {
-        dispatch(fetchPokemonFailed(error.response.data.error || error.message));
+        dispatch(fetchPokemonFailed(error?.response?.data?.error || error.message));
       });
   };
 };

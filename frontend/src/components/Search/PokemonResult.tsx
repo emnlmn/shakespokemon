@@ -10,8 +10,8 @@ const pokemonResult = (props: Props) => {
   const {pokemon, addToFavorite} = props;
 
   return (
-    <div>
-      <h3>{pokemon.name}</h3>
+    <div className={'pokemonCard'}>
+      <h2>{pokemon.name}</h2>
       <p>{pokemon.description}</p>
       <button onClick={addToFavorite}>Add to favorite</button>
     </div>

@@ -10,7 +10,11 @@ const FavoriteItem = (props: Props) => {
   const {pokemon, remove} = props;
 
   return (
-    <li>{pokemon.name} - {pokemon.description}<button onClick={remove}>Remove</button></li>
+    <li className={'pokemonCard'}>
+      <h2>{pokemon.name}</h2>
+      <p>{pokemon.description}</p>
+      <button onClick={remove}>Remove</button>
+    </li>
   )
 };
 
