@@ -1,10 +1,14 @@
 import got, { Response } from 'got';
 import * as TE from 'fp-ts/lib/TaskEither';
 import * as E from 'fp-ts/lib/Either';
+import * as O from 'fp-ts/lib/Option';
 import * as t from 'io-ts';
 import { flow, pipe } from 'fp-ts/lib/function';
 import { PokemonName } from '../../domain/pokemon/valueObject/PokemonName';
-import { makeNonEmptyPokemonDescription } from '../../domain/pokemon/valueObject/PokemonDescription';
+import {
+  makeNonEmptyPokemonDescription,
+  PokemonDescription
+} from '../../domain/pokemon/valueObject/PokemonDescription';
 
 const inMemoryCache = new Map();
 
@@ -28,11 +32,11 @@ const pokemonFlavorTextEntries = t.type({
 
 const pokeApi = got.extend({
   prefixUrl: baseUrl,
+  cache: inMemoryCache,
   headers: {
     accept: 'application/json',
     'user-agent': 'shakespokemon',
   },
-  cache: inMemoryCache,
   responseType: 'json',
   handlers: [
     (options, next) => {
@@ -56,11 +60,11 @@ const pokeApi = got.extend({
 const decodeWith = <A>(decoder: t.Decoder<unknown, A>) =>
   flow(
     decoder.decode,
-    E.mapLeft((_) => new Error('PokeApi decoding error')),
+    E.mapLeft((_) => new Error('[PokeApi] Response decoding error')),
     TE.fromEither,
   );
 
-const getPokemonSpecies = (pokemonName: PokemonName) =>
+const fetchPokemonSpecies = (pokemonName: PokemonName) =>
   TE.tryCatch<Error, Response>(
     () => pokeApi(pokemonName),
     (reason) => new Error(String(reason)),
@@ -68,7 +72,7 @@ const getPokemonSpecies = (pokemonName: PokemonName) =>
 
 const fetchPokemonDescription = (pokemonName: PokemonName) => {
   return pipe(
-    getPokemonSpecies(pokemonName),
+    fetchPokemonSpecies(pokemonName),
     TE.map((response) => response.body),
     TE.chain(decodeWith(pokemonFlavorTextEntries)),
     TE.map((decodedBody) => decodedBody.flavor_text_entries),

@@ -5,6 +5,8 @@ quickstart: header help
 help:
 	@echo "  ${boldunderline}Backend Commands${normal}"
 	@echo ""
+	@echo "      ${bold}setup${normal}				Setup the development environment"
+	@echo "      ${bold}shell${normal}				Start the development environment"
 	@echo "      ${bold}shell${normal}				Get an interactive shell (inside the container)"
 	@echo "      ${bold}build${normal}				Build the latest release image"
 	@echo "      ${bold}lint-check${normal}				Check code linting with eslint"

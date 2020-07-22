@@ -6,8 +6,6 @@ import { flow, pipe } from 'fp-ts/lib/function';
 import { PokemonDescription } from '../../domain/pokemon/valueObject/PokemonDescription';
 import { makeNonEmptyShakespeareanDescription } from '../../domain/pokemon/valueObject/ShakespeareanDescription';
 
-const inMemoryCache = new Map();
-
 const baseUrl = 'https://api.funtranslations.com/translate/';
 
 const translationResponse = t.type({
@@ -27,7 +25,6 @@ export const funTranslationsApi = got.extend({
     accept: 'application/json',
     'user-agent': 'shakespokemon',
   },
-  cache: inMemoryCache,
   responseType: 'json',
   handlers: [
     (options, next) => {
@@ -57,7 +54,7 @@ const decodeWith = <A>(decoder: t.Decoder<unknown, A>) =>
 
 const fetchTranslatedDescription = (pokemonDescription: PokemonDescription) => {
   return TE.tryCatch<Error, Response>(
-    () => funTranslationsApi.post('shakespeare', { json: { text: pokemonDescription } }),
+    () => funTranslationsApi(`shakespeare.json?text=${pokemonDescription}`),
     (reason) => new Error(String(reason)),
   );
 };

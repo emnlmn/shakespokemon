@@ -12,7 +12,7 @@ const getPokemonDescription = (retrieveShakespeareanPokemon: RetrieveShakespeare
   return pipe(
     makeNonEmptyPokemonName(req.params.name || ''),
     O.fold(
-      () => res.send(400, 'Invalid Pokemon name'),
+      () => res.send(400, {error: 'Invalid Pokemon name'}),
       (pokemonName) => retrieveShakespeareanPokemon(pokemonName),
     ),
     TE.fold(
