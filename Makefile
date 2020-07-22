@@ -13,11 +13,14 @@ setup: start
 	@$(MAKE) -C api setup
 
 start:
-	@$(MAKE) -C api start
+	$(MAKE) -C api start
+	$(MAKE) -C frontend start
 
 help-all:
 	@echo "  -> ${bold}runs from ./api folder${normal}"
 	@$(MAKE) -C api help
+	@echo "  -> ${bold}runs from ./frontend folder${normal}"
+	@$(MAKE) -C frontend help
 
 .DEFAULT:
 	@echo "[ERROR] command not found. Please run backend or fronted commands from appropriate sub-directories";
