@@ -25,4 +25,4 @@ WORKDIR /home/shakespokemon
 ENV NODE_ENV=production
 
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["node", "src/app.js"]
+CMD ["node", "app.js"]

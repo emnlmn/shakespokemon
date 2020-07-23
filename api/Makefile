@@ -9,7 +9,7 @@ help:
 	@echo "      ${bold}shell${normal}				Start the development environment"
 	@echo "      ${bold}shell${normal}				Get an interactive shell (inside the container)"
 	@echo "      ${bold}build${normal}				Build the latest release image"
-	@echo "      ${bold}lint-check${normal}				Check code linting with eslint"
+	@echo "      ${bold}lint-check${normal}			Check code linting with eslint"
 	@echo "      ${bold}lint-fix${normal}				Fix code linting with eslint"
 	@echo "      ${bold}test-unit${normal}				Runs the unit test suite"
 	@echo "      ${bold}test-coverage${normal}			Runs the test suite and show the total coverage"
@@ -44,7 +44,7 @@ test-behaviours:
 	npm run test:behaviours
 
 build:
-	docker build .
+	docker build -t shakespokemon:latest .
 
 header:
 	@echo "  ${bold}Shakespearean Pokemon API${normal}"

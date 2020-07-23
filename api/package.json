@@ -38,8 +38,6 @@
     "eslint-import-resolver-typescript": "^2.0.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "fp-ts": "^2.7.0",
-    "io-ts": "^2.2.8",
     "jest": "^26.1.0",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
@@ -53,6 +51,8 @@
     "got": "^11.5.0",
     "restify": "^8.5.1",
     "restify-clients": "^3.0.0",
-    "restify-errors": "^8.0.2"
+    "restify-errors": "^8.0.2",
+    "fp-ts": "^2.7.0",
+    "io-ts": "^2.2.8"
   }
 }
