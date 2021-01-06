@@ -47,7 +47,7 @@
     "typescript": "^3.9.6"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "got": "^11.5.0",
     "restify": "^8.5.1",
     "restify-clients": "^3.0.0",
